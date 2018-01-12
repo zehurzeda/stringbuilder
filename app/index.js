@@ -12,12 +12,22 @@ function getQtdCaracteres() {
   return maiorQtdCaracteres;
 }
 
+var getTextoInicial = (nomeVariavel) => {
+  return `final StringBuilder ${nomeVariavel} = new StringBuilder();\n\n`
+}
+
+var getNomeVariavel = (text = 'sql') => {
+  return text;
+};
+
 function justificaTexto(texto){
-  var textoFormatado = '';
   var linhas = texto.split('\n');
+  var nomeVariavel = getNomeVariavel($('#nomeVariavel').val() == '' ? undefined : $('#nomeVariavel').val());
   var qtdDeCaracteres = getQtdCaracteres();
-  var textoInicial = 'sql.append("';
   var textoFinal = '");'
+  var textoFormatado = getTextoInicial(nomeVariavel);
+  var textoInicial = nomeVariavel.concat('.append("');
+
   linhas.forEach(function(linha) {
     var qtdEspacos = qtdDeCaracteres - linha.length;
     if(qtdEspacos > 0){
