@@ -1,0 +1,33 @@
+{
+  "name": "stringbuilder",
+  "version": "1.0.0",
+  "description": "Projeto para justificar sql's muito grandes",
+  "main": "index.js",
+  "dependencies": {
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "admin-lte": "^2.4.2",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "font-awesome": "^4.7.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-jshint": "^2.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-uglifycss": "^1.0.9",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^5.0.0",
+    "gulp-webserver": "^0.9.1",
+    "run-sequence": "^2.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "gulp"
+  },
+  "author": "zehurzeda",
+  "license": "ISC"
+}
