@@ -69,9 +69,8 @@ function justificaTexto(texto){
   var linhas = texto.split('\n');
   var nomeVariavel = getNomeVariavel($('#nomeVariavel').val() == '' ? undefined : $('#nomeVariavel').val());
   var qtdDeCaracteres = getQtdCaracteres();
-  console.log(qtdDeCaracteres);
   var textoFinal = '");'
-  var textoFormatado = '';
+  var textoFormatado = $('#isImprimirVariavel').is(":checked") ? getTextoInicial(nomeVariavel) : '';
   var textoInicial = nomeVariavel.concat('.append("');
 
   linhas.forEach(function(linha) {
