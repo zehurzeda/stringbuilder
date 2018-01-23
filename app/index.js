@@ -1,13 +1,10 @@
-function getQtdCaracteres() {
-  var text = $('#entrada').val();
-  var linhas = text.split('\n');
+function getQtdCaracteres(linhas) {
   var maiorQtdCaracteres = 0;
 
   linhas.forEach(function(linha) {
-    var tamanhoLinha = 0;
+    var tamanhoLinha = linha.length;
     linha = linha.rtrim();
     for(var i = 0; i < linha.length; i++){
-      tamanhoLinha ++;
       if(linha.charAt(i) === '\t'){
         tamanhoLinha = tamanhoLinha + getQtdCaracteresTab(i)
       }
@@ -24,20 +21,19 @@ String.prototype.rtrim = function () {
 }
 
 function getQtdCaracteresTab(indexInicial) {
-  var texto = '';
+  var qtdEspacos = 0;
   indexInicial += 1;
   if(indexInicial%8 == 0){
-    texto =  '        ';
+    qtdEspacos =  8;
   }else {
     for(var i = indexInicial; i< (indexInicial + 8); i++){
+      qtdEspacos ++;
       if(i%8 == 0){
         break;
       }
-      texto += ' ';
     }
   }
-
-  return texto.length;
+  return qtdEspacos;
 }
 
 function removeTabs(indexInicial) {
@@ -65,21 +61,31 @@ var getNomeVariavel = (text = 'sql') => {
   return text;
 };
 
-function justificaTexto(texto){
-  var linhas = texto.split('\n');
-  var nomeVariavel = getNomeVariavel($('#nomeVariavel').val() == '' ? undefined : $('#nomeVariavel').val());
-  var qtdDeCaracteres = getQtdCaracteres();
-  var textoFinal = '");'
-  var textoFormatado = $('#isImprimirVariavel').is(":checked") ? getTextoInicial(nomeVariavel) : '';
-  var textoInicial = nomeVariavel.concat('.append("');
+function dividirTextoEmLinhas(texto){
+  return texto.split('\n');
+}
 
-  linhas.forEach(function(linha) {
+function retirarTabs(linhas, qtdDeCaracteres){
+  var linhasFormatadas = [];
+  linhas.forEach(function(linha){
     linha = linha.rtrim();
     for(var i = 0; i < qtdDeCaracteres; i++){
       if(linha.charAt(i) === '\t'){
-        linha = linha.substring(0, i) + removeTabs(i) + linha.substring(i+1); 
+        linha = linha.substring(0, i) + removeTabs(i) + linha.substring(i+1);
       }
     }
+    linhasFormatadas.push(linha); 
+  });
+  return linhasFormatadas;
+}
+
+function justificaTexto(linhas, qtdDeCaracteres){
+  var nomeVariavel = getNomeVariavel($('#nomeVariavel').val() == '' ? undefined : $('#nomeVariavel').val());
+  var textoFinal = '");'
+  var textoFormatado = $('#isImprimirVariavel').is(":checked") ? getTextoInicial(nomeVariavel) : '';
+  var textoInicial = nomeVariavel.concat('.append("');
+  linhas.forEach(function(linha) {
+    linha = linha.rtrim();
     for(var i = linha.length; i < qtdDeCaracteres; i++){
       linha = linha.concat(' ');
     }
@@ -89,7 +95,11 @@ function justificaTexto(texto){
 }
 
 function clickBuild(){
-  var textoFormatado = justificaTexto($('#entrada').val());
+  var linhas = dividirTextoEmLinhas($('#entrada').val())
+  var qtdDeCaracteres = getQtdCaracteres(linhas);
+  var linhasFormatadas = retirarTabs(linhas, qtdDeCaracteres);
+  qtdDeCaracteres = getQtdCaracteres(linhasFormatadas);
+  var textoFormatado = justificaTexto(linhasFormatadas, qtdDeCaracteres);
   $('#saida').val(textoFormatado);
 }
 
